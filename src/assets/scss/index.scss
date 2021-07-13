@@ -87,9 +87,11 @@
     }
 
     .body-box {
+      width: 100%;
       margin-top: 0.2rem;
       display: flex;
       flex-direction: column;
+
 
       //下方区域的布局
       .content-box {
@@ -100,8 +102,18 @@
       // 底部数据
       .bototm-box {
         margin-top: 0.125rem;
+        height: 6.5rem;
         display: grid;
         grid-template-columns: repeat(2, 50%);
+        width: 100%;
+
+        .post_abol {
+          width: 40%;
+          height: 75%;
+          position: absolute;
+          top: 1.75rem;
+          right: 0.75rem;
+        }
       }
     }
   }

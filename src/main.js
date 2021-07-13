@@ -12,7 +12,8 @@ import 'vue-awesome/icons/chart-area.js';
 import 'vue-awesome/icons/chart-pie.js';
 import 'vue-awesome/icons/chart-line.js';
 import 'vue-awesome/icons/align-left.js';
-
+import * as echarts from 'echarts';
+import axios from '@/api'
 // 全局注册图标
 Vue.component('icon', Icon);
 
@@ -24,9 +25,9 @@ import './assets/scss/style.scss';
 
 
 //引入echart
-import echarts from 'echarts'
+// import echarts from 'echarts'
 Vue.prototype.$echarts = echarts
-
+Vue.prototype.$http = axios
 Vue.config.productionTip = false;
 
 new Vue({
