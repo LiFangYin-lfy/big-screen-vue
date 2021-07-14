@@ -5,7 +5,8 @@ import router from '@/router'
 import JSONBIG from 'json-bigint'
 
 Vue.use(router)
-axios.defaults.baseURL = 'http://112.35.167.208:8083/index.php?s=';
+// axios.defaults.baseURL = 'http://112.35.167.208:8083/index.php?s=';
+axios.defaults.baseURL = 'http://112.35.167.208:20083/index.php?s=';
 axios.defaults.transformResponse = [(data) => {
     try {
         return JSONBIG.parse(data)
@@ -17,7 +18,7 @@ axios.defaults.transformResponse = [(data) => {
 // 请求拦截器
 axios.interceptors.request.use(config => {
     // 1. 获取token
-    const token = window.localStorage.getItem()
+    const token = window.localStorage.getItem('token')
     config.headers.token = token
     return config;
 }, err => {

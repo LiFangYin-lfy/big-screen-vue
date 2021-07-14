@@ -1,5 +1,5 @@
 <template>
-  <div id="container" ref="main" style="height='6.25rem'"></div>
+  <div id="container" ref="main" style="height='8.25rem'"></div>
 </template>
 
 <script>
@@ -7,19 +7,39 @@ export default {
   name: 'bottom-left',
   data() {
     return {
-
+      // naems:['马克思主义基本原理概论','毛泽东思想和中国特色社会主义理论体系概论','思想道德修养与法律基础','形势与政','中国近现代史纲要'],
+      titlelist: [{ name: '马克思概论', value: '', kc: 'mks' }, { name: '毛概论', value: '', kc: 'mzd' }, { name: '思想基础', value: '', kc: 'sxd' }, { name: '形势与政', value: '', kc: 'xsy' }, { name: '中国近现代史', value: '', kc: 'zgj' }],
+      titlelist2: [{ name: '马克思概论', value: '', kc: 'mks' }, { name: '毛概论', value: '', kc: 'mzd' }, { name: '思想基础', value: '', kc: 'sxd' }, { name: '形势与政', value: '', kc: 'xsy' }, { name: '中国近现代史', value: '', kc: 'zgj' }],
+      titlelist3: [{ name: '马克思概论', value: '', kc: 'mks' }, { name: '毛概论', value: '', kc: 'mzd' }, { name: '思想基础', value: '', kc: 'sxd' }, { name: '形势与政', value: '', kc: 'xsy' }, { name: '中国近现代史', value: '', kc: 'zgj' }],
+      benke: [],
+      duli: [],
+      gaozhi: [],
+      inforX: '',
+      linebenke: [],
+      lineduli: [],
+      linegaozhi: [],
+      perY: {},
+      ratStadard: '',
+      ratY: {},
+      roundbenke: [],
+      roundduli: [],
+      roundgaozhi: [],
+      barchart: [],
+      linechart: [],
+      source: [],
+      conBenke: [],
+      consDuli: [],
+      conGaozhi: [],
     }
   },
   components: {
 
   },
   created() {
-
+    this.gethandle()
   },
   mounted() {
-    this.$nextTick(function () {
-      this.getinit()
-    })
+
   },
   methods: {
     getinit() {
@@ -79,7 +99,7 @@ export default {
           { x: '10%', y: '50%' },
           { x: '10%', y: '50%' },
           { x: '10%', y: '50%' },
-          { x: '10%', y: '30%' },
+          { x: '10%', y: '50%' },
           { x2: '16.67%', y2: '30%' },
           { x2: '50%', y2: '30%' },
           { x2: '83.33%', y2: '30%' }
@@ -96,33 +116,14 @@ export default {
           trigger: 'item',
         },
         dataset: {
-          source: [
-            ['Matcha Latte', 41.1, 30.4, 65.1, 53.3],
-            ['Milk Tea', 86.5, 92.1, 85.7, 83.1],
-            ['Cheese Cocoa', 24.1, 67.2, 79.5, 86.4],
-            ['Chejese Coca', 24.1, 67.2, 75, 85.4],
-            ['Cheejse Coca', 24.1, 67.2, 75, 86.4],
-            ['Cheee Coca', 24.1, 65.2, 75, 86.4],
-            ['Ceese Coca', 24.1, 67.2, 55, 86.4],
-            ['Chee Coca', 25.1, 67.2, 75, 86.4],
-            ['eese Coca', 24.1, 67.2, 75, 86.4],
-            ['Cheesej Coca', 54.1, 67.2, 75, 56.4],
-            ['Chese Coca', 24.1, 57.2, 75, 86.4],
-            ['hese Coca1', 54.1, 67.2, 75, 56.4],
-            ['aheee Coca', 24.1, 65.2, 75, 86.4],
-            ['aeese Coca', 214.1, 67.2, 55, 86.4],
-            ['ahee Coca', 215.1, 67.2, 75, 86.4],
-            ['aese Coca', 214.1, 67.2, 75, 86.4],
-            ['aheesej Coca', 154.1, 67.2, 75, 56.4],
-            ['ahese Coca', 124.1, 57.2, 75, 86.4],
-            ['aese Coca1', 154.1, 67.2, 75, 56.4],
-          ]
+          source: this.source
         },
         xAxis: [{
           type: 'category',
           nameTextStyle: {
             color: '#fff',
             fontSize: 14,
+            height: 100,
           },
           axisTick: {
             show: false,
@@ -135,8 +136,15 @@ export default {
             interval: 0,//代表显示所有x轴标签显示
           }
         }
-          // , {
+          //   , {
           //   type: 'value',
+          //   nameGap: 150,
+          //   name: '独立院校',
+          //   nameLocation: 'center',
+          //   nameTextStyle: {
+          //     color: '#fff',
+          //     verticalAlign: 'middle'
+          //   },
           //   axisLine: {
           //     onZero: false,
           //     onZeroAxisIndex: 1,
@@ -146,7 +154,7 @@ export default {
           //     }
           //   },
           //   position: 'bottom',
-          //   offset: -100,
+          //   // offset: 100,
           // }
         ],
         yAxis: [
@@ -154,8 +162,8 @@ export default {
             type: 'value',
             name: '专业别思政教师人员',
             min: 0,
-            max: 500,
-            interval: 50,
+            max: 400,
+            interval: 20,
             "splitLine": {     //网格线
               "show": false,
               lineStyle: {
@@ -181,8 +189,8 @@ export default {
             type: 'value',
             name: '师生比',
             min: 0,
-            max: 1400,
-            interval: 200,
+            max: this.ratY.max,
+            interval: 100,
             "splitLine": {     //网格线
               "show": true,
               lineStyle: {
@@ -264,7 +272,7 @@ export default {
                 yAxis: 250     //这儿定义基准线的数值为多少
               }],
             },
-            data: [141.1, 186.5, 324.1, 250, 241.1, 146.5, 324.1, 142, 221.1, 326.5, 124.1, 340, 126.5, 121.1, 142, 311.1, 426.5, 524.1, 710]
+            data: this.linechart
           },
           {
             name: '普通本科',
@@ -294,22 +302,7 @@ export default {
             labelLine: {
               show: false
             },
-            data: [{
-              value: 135,
-              name: '视频广告'
-            }, {
-              value: 1048,
-              name: '百度'
-            }, {
-              value: 651,
-              name: '谷歌'
-            }, {
-              value: 147,
-              name: '必应'
-            }, {
-              value: 102,
-              name: '其他'
-            }]
+            data: this.conBenke
           },
           {
             name: '高职院校',
@@ -342,22 +335,7 @@ export default {
               show: false
             },
             avoidLabelOverlap: false,
-            data: [{
-              value: 135,
-              name: '视频广告'
-            }, {
-              value: 148,
-              name: '百度'
-            }, {
-              value: 251,
-              name: '谷歌'
-            }, {
-              value: 147,
-              name: '必应'
-            }, {
-              value: 102,
-              name: '其他'
-            }]
+            data: this.conGaozhi
           },
           {
             name: '独立院校',
@@ -387,22 +365,7 @@ export default {
             labelLine: {
               show: false
             },
-            data: [{
-              value: 135,
-              name: '视频广告'
-            }, {
-              value: 248,
-              name: '百度'
-            }, {
-              value: 251,
-              name: '谷歌'
-            }, {
-              value: 147,
-              name: '必应'
-            }, {
-              value: 102,
-              name: '其他'
-            }]
+            data: this.consDuli
           }
         ]
       };
@@ -426,10 +389,58 @@ export default {
       });
       myChart.setOption(option);
     },
+    async gethandle() {
+      try {
+        const { data: { data } } = await this.$http.post('index/index/teacherInfor')
+        console.log(data);
+        let datat = JSON.parse(JSON.stringify(data))
+        this.benke = datat.cylinder.benke
+        this.duli = datat.cylinder.duli
+        this.gaozhi = datat.cylinder.gaozhi
+        this.inforX = datat.inforX
+        this.linebenke = datat.line.benke
+        this.lineduli = datat.line.duli
+        this.linegaozhi = datat.line.gaozhi
+        this.perY = datat.perY
+        this.ratStadard = datat.ratStadard
+        this.ratY = datat.ratY
+        // this.roundbenke = datat.round.benke
+        this.roundduli = datat.round.duli
+        this.roundgaozhi = datat.round.gaozhi
+        this.barchart = [...datat.cylinder.benke, ...datat.cylinder.duli, ...datat.cylinder.gaozhi]
+        this.linechart = [...datat.line.benke, ...datat.line.duli, ...datat.line.gaozhi]
+        this.source = this.barchart.map((item) => {
+          return [item['name'], item['mks'], item['mzd'], item['sid'], item['sxd'], item['xsy'], item['zgj']]
+        })
+        this.consDuli = this.aryint(this.titlelist, datat.round.duli)
+        this.conGaozhi = this.aryint(this.titlelist2, datat.round.gaozhi)
+        this.conBenke = this.aryint(this.titlelist3, datat.round.benke)
+        this.$nextTick(function () {
+          this.getinit()
+        })
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    aryint(lit, onj) {
+      let art = [...lit], list = onj;
+      console.log(list);
+      for (let item of art) {
+        if (item.kc == 'mks') {
+          item.value = list['mks']
+        } else if (item.kc == 'mzd') {
+          item.value = list['mzd']
+        } else if (item.kc == 'xsy') {
+          item.value = list['xsy']
+        } else if (item.kc == 'sxd') {
+          item.value = list['sxd']
+        } else if (item.kc == 'zgj') {
+          item.value = list['zgj']
+        }
+      }
+      return art
+    },
   },
-  beforeDestroy() {
-
-  }
 }
 
 </script>
